@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWpf>true</UseWpf>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChatMessaging\ChatMessaging.csproj" />
+    <ProjectReference Include="..\ImageMessaging\ImageMessaging.csproj" />
+    <ProjectReference Include="..\Networking\Networking.csproj" />
+  </ItemGroup>
+
+</Project>
