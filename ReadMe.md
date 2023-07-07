@@ -4,9 +4,9 @@ This is a sample project that demonstrates how to design and develop a distribut
 # Design
 These are the modules in this project
 
-- **Networking**
-
 ![Module diagram](Images/ModuleDiagram.jpeg)
+
+- **Networking**
 
 This module defines the types required to send and receive data across process/machine boundaries.
  - *Udp Communicator*: A class that communicates via the UDP protocol.
