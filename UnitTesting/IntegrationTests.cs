@@ -51,7 +51,7 @@ namespace UnitTesting
         }
 
         /// <summary>
-        /// 
+        /// Validates message sending functionality of the messengers.
         /// </summary>
         [TestMethod]
         public void TestSendMessage()
