@@ -89,6 +89,19 @@ internal class UdpCommunicator : ICommunicator
     }
 
     /// <summary>
+    /// Gets a random available port.
+    /// </summary>
+    /// <returns>An available port</returns>
+    internal static int GetRandomAvailablePort()
+    {
+        var listener = new TcpListener(IPAddress.Loopback, 0);
+        listener.Start();
+        int port = ((IPEndPoint)listener.LocalEndpoint).Port;
+        listener.Stop();
+        return port;
+    }
+
+    /// <summary>
     /// Listens for messages on the listening port.
     /// </summary>
     private void ListenerThreadProc()

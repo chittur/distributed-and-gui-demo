@@ -11,6 +11,8 @@
  *****************************************************************************/
 
 using System.Diagnostics;
+using System.Net.Sockets;
+using System.Net;
 
 namespace Networking;
 
@@ -27,8 +29,8 @@ public static class CommunicatorFactory
     {
         // Create a random port number between 1000 and 65000.
         // Please note that this can throw if the port is already in use.
-        int random = new Random().Next(1000, 65000);
-        Trace.TraceInformation($"Starting communicator in port {random}");
-        return new UdpCommunicator(random);
+        int port = UdpCommunicator.GetRandomAvailablePort();
+        Trace.TraceInformation($"Starting communicator in port {port}");
+        return new UdpCommunicator(port);
     }
 }

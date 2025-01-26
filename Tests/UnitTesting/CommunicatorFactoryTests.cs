@@ -33,24 +33,10 @@ public class CommunicatorFactoryTests
         // Assert
         Assert.IsNotNull(communicator);
         Assert.IsInstanceOfType(communicator, typeof(ICommunicator));
-    }
-
-    /// <summary>
-    /// Tests that CreateCommunicator generates a random port number within the specified range.
-    /// </summary>
-    [TestMethod]
-    [Owner("Ramaswamy Krishnan-Chittur")]
-    public void CreateCommunicatorShouldGenerateRandomPort()
-    {
-        // Act
-        ICommunicator communicator = CommunicatorFactory.CreateCommunicator();
 
         // Access the public ListenPort property directly
         int listenPort = ((UdpCommunicator)communicator).ListenPort;
         Logger.LogMessage($"ListenPort: {listenPort}");
-
-        // Assert
-        Assert.IsTrue(listenPort >= 1000 && listenPort <= 65000);
     }
 
     /// <summary>

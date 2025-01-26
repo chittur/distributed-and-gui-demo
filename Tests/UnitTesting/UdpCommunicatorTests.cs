@@ -34,7 +34,7 @@ public class UdpCommunicatorTests
     public void Setup()
     {
         _mockListener = new Mock<IMessageListener>();
-        _listenPort = GetRandomAvailablePort();
+        _listenPort = UdpCommunicator.GetRandomAvailablePort();
         Logger.LogMessage($"Setup: Udp communicator listening on port {_listenPort}");
         _communicator = new UdpCommunicator(_listenPort);
     }
@@ -69,7 +69,7 @@ public class UdpCommunicatorTests
         // Arrange
         Mock<IMessageListener> mockListener1 = new();
         Mock<IMessageListener> mockListener2 = new();
-        int listenPort = GetRandomAvailablePort();
+        int listenPort = UdpCommunicator.GetRandomAvailablePort();
         Logger.LogMessage($"Udp communicator listening on port {listenPort}");
         UdpCommunicator udpCommunicator = new UdpCommunicator(listenPort);
         const string SubscriberId = "TestNewSubscriberId";
@@ -130,18 +130,5 @@ public class UdpCommunicatorTests
         byte[] receivedBytes = udpClient.Receive(ref endPoint);
         string receivedMessage = Encoding.ASCII.GetString(receivedBytes);
         Assert.AreEqual($"{senderId}:{message}", receivedMessage);
-    }
-
-    /// <summary>
-    /// Gets a random available port.
-    /// </summary>
-    /// <returns>An available port</returns>
-    private int GetRandomAvailablePort()
-    {
-        var listener = new TcpListener(IPAddress.Loopback, 0);
-        listener.Start();
-        int port = ((IPEndPoint)listener.LocalEndpoint).Port;
-        listener.Stop();
-        return port;
     }
 }
