@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: RamAgentPool
+  name: Default
 
 variables:
   buildConfiguration: 'Release'
