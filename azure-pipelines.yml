@@ -76,29 +76,6 @@ steps:
     }
   displayName: 'Generate Code Coverage Report'
 
-- powershell: |
-    $htmlSummaryPath = "$(Build.SourcesDirectory)\\CodeCoverage\\index.html"
-    if (Test-Path $htmlSummaryPath) {
-      $summaryContent = Get-Content $htmlSummaryPath
-      $coveragePattern = '<div class="large cardpercentagebar cardpercentagebar0">([0-9]+)%</div>'
-      $matches = [regex]::Matches($summaryContent, $coveragePattern)
-      if ($matches.Count -gt 0) {
-        $coverageValue = [math]::Round([double]$matches[0].Groups[1].Value)
-        if ($coverageValue -lt $(coverageThreshold)) {
-          Write-Host "##vso[task.logissue type=warning]Code coverage ($coverageValue%) is below the threshold ($(coverageThreshold)%)"
-        } else {
-          Write-Host "Code coverage ($coverageValue%) is above the threshold ($(coverageThreshold)%)"
-        }
-      } else {
-        Write-Host "##vso[task.logissue type=error]Could not find coverage percentage in the HTML summary."
-        exit 1
-      }
-    } else {
-      Write-Host "##vso[task.logissue type=error]HTML summary not found: $htmlSummaryPath"
-      exit 1
-    }
-  displayName: 'Check Code Coverage Threshold'
-
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Build.SourcesDirectory)\\CodeCoverage'
@@ -111,4 +88,6 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)\\TestResults\\coverage\\coverage.cobertura.xml'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
+    failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
   displayName: 'Publish Code Coverage Results'
+
