@@ -117,14 +117,14 @@ internal class UdpCommunicator : ICommunicator
                         }
                         else
                         {
-                            Trace.TraceInformation($"Received message for unknown subscriber: {id}");
+                            Trace.TraceWarning($"Received message for unknown subscriber: {id}");
                         }
                     }
                 }
             }
             catch (Exception e)
             {
-                Trace.TraceInformation(e.Message);
+                Trace.TraceError(e.Message);
             }
         }
     }

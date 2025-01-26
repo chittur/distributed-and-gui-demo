@@ -35,7 +35,7 @@ public class UdpCommunicatorTests
     {
         _mockListener = new Mock<IMessageListener>();
         _listenPort = GetRandomAvailablePort();
-        Logger.LogMessage($"ListenPort: {_listenPort}");
+        Logger.LogMessage($"Setup: Udp communicator listening on port {_listenPort}");
         _communicator = new UdpCommunicator(_listenPort);
     }
 
@@ -56,6 +56,33 @@ public class UdpCommunicatorTests
         var subscribers = (Dictionary<string, IMessageListener>?)subscribersField?.GetValue(_communicator);
         Assert.IsNotNull(subscribers);
         Assert.IsTrue(subscribers!.ContainsKey(subscriberId));
+    }
+
+    /// <summary>
+    /// Tests that AddSubscriber overwrites an existing subscriber with the same id.
+    /// </summary>
+    [TestMethod]
+    public void TestAddSubscriberOverwritesForSameId()
+    {
+        // Arrange
+        Mock<IMessageListener> mockListener1 = new();
+        Mock<IMessageListener> mockListener2 = new();
+        int listenPort = GetRandomAvailablePort();
+        Logger.LogMessage($"Udp communicator listening on port {listenPort}");
+        UdpCommunicator udpCommunicator = new UdpCommunicator(listenPort);
+        const string SubscriberId = "TestNewSubscriberId";
+
+        // Act
+        udpCommunicator.AddSubscriber(SubscriberId, mockListener1.Object);
+        udpCommunicator.AddSubscriber(SubscriberId, mockListener2.Object);
+
+        // Assert
+        System.Reflection.FieldInfo? subscribersField = typeof(UdpCommunicator).GetField("_subscribers", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var subscribers = (Dictionary<string, IMessageListener>?)subscribersField?.GetValue(udpCommunicator);
+        Assert.IsNotNull(subscribers);
+        Assert.AreEqual(subscribers!.Count, 1);
+        Assert.IsTrue(subscribers!.ContainsKey(SubscriberId));
+        Assert.AreEqual(mockListener2.Object, subscribers[SubscriberId]);
     }
 
     /// <summary>
