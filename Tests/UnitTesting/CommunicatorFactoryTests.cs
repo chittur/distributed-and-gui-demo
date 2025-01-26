@@ -65,7 +65,8 @@ public class CommunicatorFactoryTests
         ICommunicator communicator = CommunicatorFactory.CreateCommunicator();
 
         // Debugging information
-        foreach (string message in listener.Messages)
+        var messagesCopy = listener.Messages.ToList(); // Create a copy of the collection
+        foreach (string message in messagesCopy)
         {
             Logger.LogMessage(message);
         }
