@@ -41,6 +41,7 @@ public class IntegrationTests
     /// Validates that the messengers subscribe with the communicator passed to it.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestSubscribers()
     {
         // Arrange
@@ -59,6 +60,7 @@ public class IntegrationTests
     /// Validates message sending functionality of the messengers.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestSendMessage()
     {
         // Arrange
@@ -85,6 +87,7 @@ public class IntegrationTests
     /// Validates that the received message is set in the view model.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestReceiveMessage()
     {
         // Arrange

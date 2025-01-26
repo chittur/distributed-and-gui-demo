@@ -24,6 +24,7 @@ public class CommunicatorFactoryTests
     /// Tests that CreateCommunicator returns a new instance of ICommunicator.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void CreateCommunicatorShouldReturnNewInstance()
     {
         // Act
@@ -38,6 +39,7 @@ public class CommunicatorFactoryTests
     /// Tests that CreateCommunicator generates a random port number within the specified range.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void CreateCommunicatorShouldGenerateRandomPort()
     {
         // Act
@@ -55,6 +57,7 @@ public class CommunicatorFactoryTests
     /// Tests that CreateCommunicator logs the starting port number.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void CreateCommunicatorShouldLogStartingPort()
     {
         // Arrange

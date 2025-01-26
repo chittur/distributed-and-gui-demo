@@ -39,6 +39,7 @@ public class EndToEndTests
     /// Tests the integration of sending and receiving chat messages using UdpCommunicator.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendAndReceiveChatMessageIntegrationTest()
     {
         // Arrange
@@ -61,6 +62,7 @@ public class EndToEndTests
     /// Tests the integration of sending and receiving image messages using UdpCommunicator.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendAndReceiveImageMessageIntegrationTest()
     {
         // Arrange

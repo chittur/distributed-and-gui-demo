@@ -34,6 +34,7 @@ public class ChatMessengerTests
     /// Tests that the ChatMessenger constructor adds itself as a subscriber.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void ConstructorShouldAddSubscriber()
     {
         // Assert
@@ -44,6 +45,7 @@ public class ChatMessengerTests
     /// Tests that SendMessage sends the message to the specified IP and port.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
@@ -62,6 +64,7 @@ public class ChatMessengerTests
     /// Tests that OnMessageReceived invokes the OnChatMessageReceived event.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void OnMessageReceivedShouldInvokeEvent()
     {
         // Arrange

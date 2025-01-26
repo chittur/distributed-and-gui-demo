@@ -38,6 +38,7 @@ public class MainPageViewModelTests
     /// Tests that the MainPageViewModel constructor initializes the ReceivePort property.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void ConstructorShouldInitializeReceivePort()
     {
         // Arrange
@@ -54,6 +55,7 @@ public class MainPageViewModelTests
     /// Tests that SendChatMessage sends the message to the specified IP and port.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendChatMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
@@ -72,6 +74,7 @@ public class MainPageViewModelTests
     /// Tests that SendImageMessage sends the image to the specified IP and port.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendImageMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
@@ -94,6 +97,7 @@ public class MainPageViewModelTests
     /// Tests that OnChatMessageReceived updates the ReceivedMessage property.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void OnChatMessageReceivedShouldUpdateReceivedMessage()
     {
         // Arrange
@@ -121,6 +125,7 @@ public class MainPageViewModelTests
     /// Tests that OnImageMessageReceived updates the ReceivedImage property.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void OnImageMessageReceivedShouldUpdateReceivedImage()
     {
         // Arrange

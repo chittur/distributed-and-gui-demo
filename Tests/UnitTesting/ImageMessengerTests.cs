@@ -36,6 +36,7 @@ public class ImageMessengerTests
     /// Tests that the ImageMessenger constructor adds itself as a subscriber.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void ConstructorShouldAddSubscriber()
     {
         // Assert
@@ -46,6 +47,7 @@ public class ImageMessengerTests
     /// Tests that SendMessage sends the image as a base64 encoded string.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void SendMessageShouldSendBase64EncodedImage()
     {
         // Arrange
@@ -65,6 +67,7 @@ public class ImageMessengerTests
     /// Tests that OnMessageReceived invokes the OnImageMessageReceived event.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void OnMessageReceivedShouldInvokeEvent()
     {
         // Arrange
@@ -83,6 +86,7 @@ public class ImageMessengerTests
     /// Tests that GetFileContentAsBase64 returns the correct base64 encoded string.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void GetFileContentAsBase64ShouldReturnBase64String()
     {
         // Arrange

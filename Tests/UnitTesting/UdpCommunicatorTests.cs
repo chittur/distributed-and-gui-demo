@@ -43,6 +43,7 @@ public class UdpCommunicatorTests
     /// Tests that AddSubscriber adds a subscriber to the list.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestAddSubscriber()
     {
         // Arrange
@@ -62,6 +63,7 @@ public class UdpCommunicatorTests
     /// Tests that AddSubscriber overwrites an existing subscriber with the same id.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestAddSubscriberOverwritesForSameId()
     {
         // Arrange
@@ -89,6 +91,7 @@ public class UdpCommunicatorTests
     /// Tests that RemoveSubscriber removes a subscriber from the list.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestRemoveSubscriber()
     {
         // Arrange
@@ -109,6 +112,7 @@ public class UdpCommunicatorTests
     /// Tests that SendMessage sends a UDP message.
     /// </summary>
     [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
     public void TestSendMessage()
     {
         // Arrange
