@@ -83,9 +83,12 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)\\CodeCoverage'
   displayName: 'Copy Code Coverage HTML to Staging Directory'
 
-- task: PublishCodeCoverageResults@1
+- task: PublishCodeCoverageResults@2
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)\\TestResults\\coverage\\coverage.cobertura.xml'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
+    failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
+    additionalCodeCoverageFiles: '**/*.coverage' # New feature: Include additional code coverage files
   displayName: 'Publish Code Coverage Results'
+
