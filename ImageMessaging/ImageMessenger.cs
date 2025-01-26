@@ -10,8 +10,8 @@
  * Description = Defines an image messenger.
  *****************************************************************************/
 
-using Networking;
 using System.IO;
+using Networking;
 
 namespace ImageMessaging;
 
