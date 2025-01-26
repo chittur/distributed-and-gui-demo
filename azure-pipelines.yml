@@ -56,6 +56,10 @@ steps:
   continueOnError: false
 
 - powershell: |
+    Get-ChildItem -Path $(Agent.TempDirectory) -Filter 'coverage.cobertura.xml' -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Move-Item -Path $_.FullName -Destination '$(coverageFilePath)' }
+  displayName: 'Move Latest Coverage File'
+
+- powershell: |
     $reportGenerator = dotnet tool list -g | Select-String 'dotnet-reportgenerator-globaltool'
     if (-not $reportGenerator) {
       dotnet tool install --global dotnet-reportgenerator-globaltool
