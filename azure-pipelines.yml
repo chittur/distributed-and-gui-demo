@@ -6,7 +6,6 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
-  coverageThreshold: '80'
   coverageFilePath: '$(Build.SourcesDirectory)\\TestResults\\coverage\\coverage.cobertura.xml'
 
 steps:
@@ -86,7 +85,7 @@ steps:
 - task: PublishCodeCoverageResults@1
   inputs:
     codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Build.SourcesDirectory)\\TestResults\\coverage\\coverage.cobertura.xml'
+    summaryFileLocation: '$(coverageFilePath)'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
     failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
   displayName: 'Publish Code Coverage Results'
