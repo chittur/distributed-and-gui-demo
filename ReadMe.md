@@ -27,8 +27,8 @@ We are using the Model-View-ViewModel (MVVM) design pattern for our User Experie
 - **GuiApp**
 This module is the *View* of our User Experience layer, and defines its XAML based GUI.
 
-- **UnitTesting**
-This module defines the unit tests and integration tests for this project.
+- **Tests**
+This module defines unit tests, integration tests and end-to-end tests for this project.
 
 ![Class diagram](Images/ClassDiagram.jpeg)
 
