@@ -25,8 +25,6 @@ public static class CommunicatorFactory
     /// <returns>A new communicator instance</returns>
     public static ICommunicator CreateCommunicator()
     {
-        // Create a random port number between 1000 and 65000.
-        // Please note that this can throw if the port is already in use.
         int port = UdpCommunicator.GetRandomAvailablePort();
         Trace.TraceInformation($"Starting communicator in port {port}");
         return new UdpCommunicator(port);
