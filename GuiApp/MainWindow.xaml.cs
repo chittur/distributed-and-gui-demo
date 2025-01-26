@@ -13,21 +13,20 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace GuiApp
+namespace GuiApp;
+
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class MainWindow : Window
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///  Creates an instance of the main window.
     /// </summary>
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        /// <summary>
-        ///  Creates an instance of the main window.
-        /// </summary>
-        public MainWindow()
-        {
-            InitializeComponent();
-            Page mainPage = new MainPage();
-            MainFrame.Navigate(mainPage);
-        }
+        InitializeComponent();
+        Page mainPage = new MainPage();
+        MainFrame.Navigate(mainPage);
     }
 }
