@@ -7,7 +7,6 @@ pool:
 variables:
   buildConfiguration: 'Release'
   coverageFilePath: '$(Build.SourcesDirectory)\\TestResults\\coverage\\coverage.cobertura.xml'
-  system.debug: true
 
 steps:
 - task: UseDotNet@2
@@ -88,6 +87,6 @@ steps:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(coverageFilePath)'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
-    failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
-    pathMappings: '$(Build.SourcesDirectory)\\=$(Build.SourcesDirectory)' # Ensure correct path mappings
+    failIfCoverageEmpty: true
+    pathMappings: '$(Build.Repository.LocalPath)=$(Build.SourcesDirectory)' # Use repository path for consistency
   displayName: 'Publish Code Coverage Results'
