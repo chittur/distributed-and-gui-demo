@@ -30,19 +30,19 @@ internal class UdpCommunicator : ICommunicator
     /// <summary>
     /// Creates an instance of the UDP Communicator.
     /// </summary>
-    /// <param name="listenPort">UDP port to listen on.</param>
-    public UdpCommunicator(int listenPort)
+    public UdpCommunicator()
     {
         _subscribers = [];
 
         // Create and start the thread that listens for messages.
-        ListenPort = listenPort;
+        ListenPort = GetRandomAvailablePort(); ;
         _listener = new(ListenPort);
         _listenThread = new(new ThreadStart(ListenerThreadProc))
         {
             IsBackground = true // Stop the thread when the main thread stops.
         };
         _listenThread.Start();
+        Trace.TraceInformation($"Udp communicator listening on port {ListenPort}");
     }
 
     /// <inheritdoc />
@@ -92,7 +92,7 @@ internal class UdpCommunicator : ICommunicator
     /// Gets a random available port.
     /// </summary>
     /// <returns>An available port</returns>
-    internal static int GetRandomAvailablePort()
+    private static int GetRandomAvailablePort()
     {
         var listener = new TcpListener(IPAddress.Loopback, 0);
         listener.Start();

@@ -62,7 +62,7 @@ public class CommunicatorFactoryTests
 
         // Assert
         Assert.IsTrue(listener.Messages.Count > 0, "No messages were logged.");
-        Assert.IsTrue(listener.Messages[0].Contains("Starting communicator in port"), "Expected log message not found.");
+        Assert.IsTrue(listener.Messages.Any(message => message.Contains("Starting Udp Communicator in port")), "Expected log message not found.");
     }
 }
 

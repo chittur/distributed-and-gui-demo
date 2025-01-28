@@ -25,8 +25,8 @@ public static class CommunicatorFactory
     /// <returns>A new communicator instance</returns>
     public static ICommunicator CreateCommunicator()
     {
-        int port = UdpCommunicator.GetRandomAvailablePort();
-        Trace.TraceInformation($"Starting communicator in port {port}");
-        return new UdpCommunicator(port);
+        ICommunicator communicator = new UdpCommunicator();
+        Trace.TraceInformation($"Starting Udp Communicator in port {communicator.ListenPort}");
+        return communicator;
     }
 }

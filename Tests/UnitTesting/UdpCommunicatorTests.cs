@@ -25,7 +25,6 @@ public class UdpCommunicatorTests
 {
     private Mock<IMessageListener> _mockListener = null!;
     private UdpCommunicator _communicator = null!;
-    private int _listenPort;
 
     /// <summary>
     /// Sets up the tests.
@@ -34,9 +33,8 @@ public class UdpCommunicatorTests
     public void Setup()
     {
         _mockListener = new Mock<IMessageListener>();
-        _listenPort = UdpCommunicator.GetRandomAvailablePort();
-        Logger.LogMessage($"Setup: Udp communicator listening on port {_listenPort}");
-        _communicator = new UdpCommunicator(_listenPort);
+        _communicator = new UdpCommunicator();
+        Logger.LogMessage($"Setup: Udp communicator listening on port {_communicator.ListenPort}");
     }
 
     /// <summary>
@@ -69,9 +67,8 @@ public class UdpCommunicatorTests
         // Arrange
         Mock<IMessageListener> mockListener1 = new();
         Mock<IMessageListener> mockListener2 = new();
-        int listenPort = UdpCommunicator.GetRandomAvailablePort();
-        Logger.LogMessage($"Udp communicator listening on port {listenPort}");
-        UdpCommunicator udpCommunicator = new UdpCommunicator(listenPort);
+        UdpCommunicator udpCommunicator = new UdpCommunicator();
+        Logger.LogMessage($"Udp communicator listening on port {udpCommunicator.ListenPort}");
         const string SubscriberId = "TestNewSubscriberId";
 
         // Act
