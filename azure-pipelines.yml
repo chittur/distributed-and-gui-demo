@@ -88,5 +88,5 @@ steps:
     summaryFileLocation: '$(coverageFilePath)'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
     failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
-    pathMappings: 'C:\\agent\\_work\\2\\s=$(Build.SourcesDirectory)' # Directly use the path mappings
+    pathMappings: '$(Build.SourcesDirectory)\\=$(Build.SourcesDirectory)' # Ensure correct path mappings
   displayName: 'Publish Code Coverage Results'
