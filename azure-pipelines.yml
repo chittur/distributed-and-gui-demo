@@ -82,11 +82,17 @@ steps:
     TargetFolder: '$(Build.ArtifactStagingDirectory)\\CodeCoverage'
   displayName: 'Copy Code Coverage HTML to Staging Directory'
 
+- powershell: |
+    Write-Host "Coverage file path: $(coverageFilePath)"
+    Write-Host "Source directory: $(Build.SourcesDirectory)"
+    Write-Host "Target directory: $(Build.ArtifactStagingDirectory)"
+  displayName: 'Echo paths for debugging'
+
 - task: PublishCodeCoverageResults@2
   inputs:
     codeCoverageTool: 'Cobertura'
     summaryFileLocation: '$(coverageFilePath)'
     reportDirectory: '$(Build.SourcesDirectory)\\CodeCoverage'
-    failIfCoverageEmpty: true # Fail the task if code coverage is empty
+    failIfCoverageEmpty: true # New feature: Fail the task if code coverage is empty
     pathMappings: 'C:\agent\_work\2\s=$(Build.SourcesDirectory)' # Map the agent path to the source path
   displayName: 'Publish Code Coverage Results'
