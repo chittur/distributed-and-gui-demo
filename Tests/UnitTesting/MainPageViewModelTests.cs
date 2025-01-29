@@ -39,7 +39,7 @@ public class MainPageViewModelTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void ConstructorShouldInitializeReceivePort()
+    public void TestConstructorShouldInitializeReceivePort()
     {
         // Arrange
         string expectedPort = _mockCommunicator.Object.ListenPort.ToString();
@@ -56,7 +56,7 @@ public class MainPageViewModelTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendChatMessageShouldSendToSpecifiedIpAndPort()
+    public void TestSendChatMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -75,7 +75,7 @@ public class MainPageViewModelTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendImageMessageShouldSendToSpecifiedIpAndPort()
+    public void TestSendImageMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -98,7 +98,7 @@ public class MainPageViewModelTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void OnChatMessageReceivedShouldUpdateReceivedMessage()
+    public void TestOnChatMessageReceivedShouldUpdateReceivedMessage()
     {
         // Arrange
         string receivedMessage = "Hello, World!";
@@ -126,7 +126,7 @@ public class MainPageViewModelTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void OnImageMessageReceivedShouldUpdateReceivedImage()
+    public void TestOnImageMessageReceivedShouldUpdateReceivedImage()
     {
         // Arrange
         string imageFilePath = @"Resources\TestImageFile.jpg"; // Path to the test image in the resources

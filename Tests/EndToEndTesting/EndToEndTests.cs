@@ -36,11 +36,11 @@ public class EndToEndTests
     }
 
     /// <summary>
-    /// Tests the integration of sending and receiving chat messages using UdpCommunicator.
+    /// Tests sending and receiving chat messages using UdpCommunicator.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendAndReceiveChatMessageIntegrationTest()
+    public void TestSendAndReceiveChatMessage()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -59,11 +59,11 @@ public class EndToEndTests
     }
 
     /// <summary>
-    /// Tests the integration of sending and receiving image messages using UdpCommunicator.
+    /// Tests sending and receiving image messages using UdpCommunicator.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendAndReceiveImageMessageIntegrationTest()
+    public void TestSendAndReceiveImageMessage()
     {
         // Arrange
         string ipAddress = "127.0.0.1";

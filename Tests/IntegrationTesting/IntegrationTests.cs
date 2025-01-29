@@ -38,11 +38,11 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// Validates that the messengers subscribe with the communicator passed to it.
+    /// Tests that the messengers subscribe with the communicator passed to it.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestSubscribers()
+    public void TestSubscribersBasic()
     {
         // Arrange
         _mockCommunicator = new Mock<ICommunicator>();
@@ -57,11 +57,11 @@ public class IntegrationTests
 
 
     /// <summary>
-    /// Validates message sending functionality of the messengers.
+    /// Tests message sending functionality of the messengers.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestSendMessage()
+    public void TestSendMessageBasic()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -84,11 +84,11 @@ public class IntegrationTests
     }
 
     /// <summary>
-    /// Validates that the received message is set in the view model.
+    /// Tests that the received message is set in the view model.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestReceiveMessage()
+    public void TestReceiveMessageBasic()
     {
         // Arrange
         string chatMessage = "Testing received message";

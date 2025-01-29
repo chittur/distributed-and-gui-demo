@@ -25,7 +25,7 @@ public class CommunicatorFactoryTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void CreateCommunicatorShouldReturnNewInstance()
+    public void TestCreateCommunicatorShouldReturnNewInstance()
     {
         // Act
         ICommunicator communicator = CommunicatorFactory.CreateCommunicator();
@@ -44,7 +44,7 @@ public class CommunicatorFactoryTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void CreateCommunicatorShouldLogStartingPort()
+    public void TestCreateCommunicatorShouldLogStartingPort()
     {
         // Arrange
         using var listener = new CustomTraceListener();

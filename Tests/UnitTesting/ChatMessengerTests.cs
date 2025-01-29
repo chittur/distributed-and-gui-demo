@@ -26,8 +26,8 @@ public class ChatMessengerTests
     [TestInitialize]
     public void Setup()
     {
-        _mockCommunicator = new Mock<ICommunicator>();
-        _chatMessenger = new ChatMessenger(_mockCommunicator.Object);
+        _mockCommunicator = new();
+        _chatMessenger = new(_mockCommunicator.Object);
     }
 
     /// <summary>
@@ -35,7 +35,7 @@ public class ChatMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void ConstructorShouldAddSubscriber()
+    public void TestConstructorShouldAddSubscriber()
     {
         // Assert
         _mockCommunicator.Verify(c => c.AddSubscriber(ChatMessenger.Identity, _chatMessenger), Times.Once);
@@ -46,7 +46,7 @@ public class ChatMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendMessageShouldSendToSpecifiedIpAndPort()
+    public void TestSendMessageShouldSendToSpecifiedIpAndPort()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -65,7 +65,7 @@ public class ChatMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void OnMessageReceivedShouldInvokeEvent()
+    public void TestOnMessageReceivedShouldInvokeEvent()
     {
         // Arrange
         string receivedMessage = "Hello, World!";
@@ -77,5 +77,24 @@ public class ChatMessengerTests
 
         // Assert
         Assert.IsTrue(eventInvoked);
+    }
+
+    /// <summary>
+    /// Tests that OnMessageReceived does not invoke OnChatMessageReceived with no subscribers.
+    /// </summary>
+    [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
+    public void TestOnMessageReceivedShouldNotInvokeEventWithNoSubscribers()
+    {
+        // Arrange
+        Mock<ICommunicator> mockCommunicator = new();
+        ChatMessenger chatMessenger = new(mockCommunicator.Object);
+        string receivedMessage = "Hello, World!";
+
+        // Act
+        chatMessenger.OnMessageReceived(receivedMessage);
+
+        // Assert
+        // If no exception is thrown, the test will pass.
     }
 }

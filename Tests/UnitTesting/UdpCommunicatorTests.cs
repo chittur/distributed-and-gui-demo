@@ -43,7 +43,7 @@ public class UdpCommunicatorTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestAddSubscriber()
+    public void TestAddSubscriberBasic()
     {
         // Arrange
         string subscriberId = "testSubscriber";
@@ -90,7 +90,7 @@ public class UdpCommunicatorTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestRemoveSubscriber()
+    public void TestRemoveSubscriberBasic()
     {
         // Arrange
         string subscriberId = "testSubscriber";
@@ -111,7 +111,7 @@ public class UdpCommunicatorTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestSendMessage()
+    public void TestSendMessageBasic()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -144,7 +144,7 @@ public class UdpCommunicatorTests
         const string SubscriberId = "TestNewSubscriberId";
         udpCommunicator.AddSubscriber(SubscriberId, mockListener.Object);
 
-        // Test messages: corrupt as well as valid.
+        // Test messages: corrupt as well as valid
         string message = "Hello, World!";
         string anotherMessage = "Another message!";
         string corruptMessage = message; // No colon in the message to separate a subscriber id from the message.
@@ -161,6 +161,40 @@ public class UdpCommunicatorTests
         // Assert
         mockListener.Verify(listener => listener.OnMessageReceived(message), Times.Once); // Verify that the valid message was received.
         mockListener.Verify(listener => listener.OnMessageReceived(anotherMessage), Times.Once); // Verify that the other valid message was received.
+    }
+
+    /// <summary>
+    /// Tests that a corrupt subscriber is handled.
+    /// </summary>
+    [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
+    public void TestCorruptSubscriberIsHandled()
+    {
+        // Arrange
+        UdpCommunicator udpCommunicator = new UdpCommunicator();
+        Logger.LogMessage($"Udp communicator listening on port {udpCommunicator.ListenPort}");
+
+        // Setup a proper subscriber
+        Mock<IMessageListener> properListener = new();
+        const string SubscriberId = "ProperSubscriberId";
+        udpCommunicator.AddSubscriber(SubscriberId, properListener.Object);
+
+        // Setup a corrupt subscriber
+        Mock<IMessageListener> corruptListener = new();
+        corruptListener.Setup(listener => listener.OnMessageReceived(It.IsAny<string>()))
+                    .Throws(new Exception("Simulated exception")); // Set up the OnMessageReceived method to throw.
+        const string CorruptSubscriberId = "CorruptSubscriberId";
+        udpCommunicator.AddSubscriber(CorruptSubscriberId, corruptListener.Object);
+
+        // Act
+        string ipAddress = "127.0.0.1";
+        int port = udpCommunicator.ListenPort;
+        string message = "Hello, World!";
+        _communicator.SendMessage(ipAddress, port, CorruptSubscriberId, "Some message"); // Send a message to the corrupt subscriber.
+        _communicator.SendMessage(ipAddress, port, SubscriberId, message); // Send a message to the valid subscriber.
+
+        // Assert
+        properListener.Verify(listener => listener.OnMessageReceived(message), Times.Once); // Verify that the valid subscriber received the message.
     }
 
     /// <summary>

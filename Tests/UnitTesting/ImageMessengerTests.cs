@@ -11,6 +11,7 @@
  *****************************************************************************/
 
 using System.IO;
+using ChatMessaging;
 using ImageMessaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -37,7 +38,7 @@ public class ImageMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void ConstructorShouldAddSubscriber()
+    public void TestConstructorShouldAddSubscriber()
     {
         // Assert
         _mockCommunicator.Verify(c => c.AddSubscriber(ImageMessenger.Identity, _imageMessenger), Times.Once);
@@ -48,7 +49,7 @@ public class ImageMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void SendMessageShouldSendBase64EncodedImage()
+    public void TestSendMessageShouldSendBase64EncodedImage()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
@@ -68,7 +69,7 @@ public class ImageMessengerTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void OnMessageReceivedShouldInvokeEvent()
+    public void TestOnMessageReceivedShouldInvokeEvent()
     {
         // Arrange
         string base64Message = "base64ImageString";
@@ -83,11 +84,30 @@ public class ImageMessengerTests
     }
 
     /// <summary>
+    /// Tests that OnMessageReceived does not invoke OnImageMessageReceived with no subscribers.
+    /// </summary>
+    [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
+    public void TestOnMessageReceivedShouldNotInvokeEventWithNoSubscribers()
+    {
+        // Arrange
+        Mock<ICommunicator> mockCommunicator = new();
+        ImageMessenger imageMessenger = new(mockCommunicator.Object);
+        string base64Message = "base64ImageString";
+
+        // Act
+        imageMessenger.OnMessageReceived(base64Message);
+
+        // Assert
+        // If no exception is thrown, the test will pass.
+    }
+
+    /// <summary>
     /// Tests that GetFileContentAsBase64 returns the correct base64 encoded string.
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void GetFileContentAsBase64ShouldReturnBase64String()
+    public void TestGetFileContentAsBase64ShouldReturnBase64String()
     {
         // Arrange
         string filePath = ImageFilePath;
