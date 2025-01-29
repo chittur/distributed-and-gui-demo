@@ -10,6 +10,7 @@
  * Description = Unit tests for the UDP communicator.
  *****************************************************************************/
 
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -127,5 +128,54 @@ public class UdpCommunicatorTests
         byte[] receivedBytes = udpClient.Receive(ref endPoint);
         string receivedMessage = Encoding.ASCII.GetString(receivedBytes);
         Assert.AreEqual($"{senderId}:{message}", receivedMessage);
+    }
+
+    /// <summary>
+    /// Tests that valid messages are received even when they are sent after corrupt messages.
+    /// </summary>
+    [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
+    public void TestCorruptMessagesFollowedByValidMessages()
+    {
+        // Arrange
+        Mock<IMessageListener> mockListener = new();
+        UdpCommunicator udpCommunicator = new UdpCommunicator();
+        Logger.LogMessage($"Udp communicator listening on port {udpCommunicator.ListenPort}");
+        const string SubscriberId = "TestNewSubscriberId";
+        udpCommunicator.AddSubscriber(SubscriberId, mockListener.Object);
+
+        // Test messages: corrupt as well as valid.
+        string message = "Hello, World!";
+        string anotherMessage = "Another message!";
+        string corruptMessage = message; // No colon in the message to separate a subscriber id from the message.
+        string invalidSubscriberMessage = $"InvalidSubscriberId:{message}"; // Invalid subscriber id.
+
+        // Act
+        string ipAddress = "127.0.0.1";
+        int port = udpCommunicator.ListenPort;
+        SendMessage(ipAddress, port, corruptMessage); // Send a corrupt message.
+        SendMessage(ipAddress, port, invalidSubscriberMessage); // Send a message with an invalid subscriber id.
+        SendMessage(ipAddress, port, $"{SubscriberId}:{message}"); // Send a valid message.
+        SendMessage(ipAddress, port, $"{SubscriberId}:{anotherMessage}"); // Send another valid message.
+
+        // Assert
+        mockListener.Verify(listener => listener.OnMessageReceived(message), Times.Once); // Verify that the valid message was received.
+        mockListener.Verify(listener => listener.OnMessageReceived(anotherMessage), Times.Once); // Verify that the other valid message was received.
+    }
+
+    /// <summary>
+    /// Sends a message to the specified IP address and port.
+    /// </summary>
+    /// <param name="ipAddress">IP address of the destination</param>
+    /// <param name="port">Port of the destination</param>
+    /// <param name="message">The message to be sent</param>
+    private static void SendMessage(string ipAddress, int port, string message)
+    {
+        Socket socket = new(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+        IPAddress broadcastAddress = IPAddress.Parse(ipAddress);
+        byte[] sendBuffer = Encoding.ASCII.GetBytes($"{message}");
+        IPEndPoint endPoint = new(broadcastAddress, port);
+        int bytesSent = socket.SendTo(sendBuffer, endPoint);
+        Debug.Assert(bytesSent == sendBuffer.Length);
     }
 }
