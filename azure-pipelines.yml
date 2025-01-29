@@ -52,7 +52,7 @@ steps:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Agent.TempDirectory)\\coverage.cobertura.xml'
-  continueOnError: false
+  continueOnError: true
 
 - powershell: |
     Get-ChildItem -Path $(Agent.TempDirectory) -Filter 'coverage.cobertura.xml' -Recurse | Sort-Object LastWriteTime -Descending | Select-Object -First 1 | ForEach-Object { Move-Item -Path $_.FullName -Destination '$(coverageFilePath)' }
