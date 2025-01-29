@@ -135,7 +135,7 @@ public class UdpCommunicatorTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestCorruptMessagesFollowedByValidMessages()
+    public async Task TestCorruptMessagesFollowedByValidMessages()
     {
         // Arrange
         Mock<IMessageListener> mockListener = new();
@@ -159,6 +159,7 @@ public class UdpCommunicatorTests
         SendMessage(ipAddress, port, $"{SubscriberId}:{anotherMessage}"); // Send another valid message.
 
         // Assert
+        await Task.Delay(1000); // Adding a delay to ensure the message is received
         mockListener.Verify(listener => listener.OnMessageReceived(message), Times.Once); // Verify that the valid message was received.
         mockListener.Verify(listener => listener.OnMessageReceived(anotherMessage), Times.Once); // Verify that the other valid message was received.
     }
@@ -168,7 +169,7 @@ public class UdpCommunicatorTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestCorruptSubscriberIsHandled()
+    public async Task TestCorruptSubscriberIsHandled()
     {
         // Arrange
         UdpCommunicator udpCommunicator = new UdpCommunicator();
@@ -194,6 +195,7 @@ public class UdpCommunicatorTests
         _communicator.SendMessage(ipAddress, port, SubscriberId, message); // Send a message to the valid subscriber.
 
         // Assert
+        await Task.Delay(1000); // Adding a delay to ensure the message is received
         properListener.Verify(listener => listener.OnMessageReceived(message), Times.Once); // Verify that the valid subscriber received the message.
     }
 

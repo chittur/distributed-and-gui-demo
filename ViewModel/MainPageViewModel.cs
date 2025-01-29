@@ -27,9 +27,13 @@ namespace ViewModel;
 /// </summary>
 public class MainPageViewModel : INotifyPropertyChanged
 {
-    private readonly ICommunicator _communicator;    // Communicator used to send and receive messages.
     private readonly ChatMessenger _chatMessenger;   // Messenger used to send and receive chat messages.
     private readonly ImageMessenger _imageMessenger; // Messenger used to send and receive image messages.
+
+    /// <summary>
+    /// Communicator used to send and receive messages.
+    /// </summary>
+    internal ICommunicator Communicator { get; private set; } = null!;
 
     /// <summary>
     /// Creates an instance of the main page viewmodel.
@@ -37,14 +41,14 @@ public class MainPageViewModel : INotifyPropertyChanged
     /// <param name="communicator">Optional instance of communicator</param>
     public MainPageViewModel(ICommunicator? communicator = null)
     {
-        _communicator = communicator ?? CommunicatorFactory.CreateCommunicator();
+        Communicator = communicator ?? CommunicatorFactory.CreateCommunicator();
 
         // Update the port that the communicator is listening on.
-        ReceivePort = _communicator.ListenPort.ToString();
+        ReceivePort = Communicator.ListenPort.ToString();
         OnPropertyChanged(nameof(ReceivePort));
 
         // Create an instance of the chat messenger and signup for callback.
-        _chatMessenger = new(_communicator);
+        _chatMessenger = new(Communicator);
         _chatMessenger.OnChatMessageReceived += delegate (string message)
         {
             // UI element update needs to happen on the UI thread, and this callback is
@@ -56,7 +60,7 @@ public class MainPageViewModel : INotifyPropertyChanged
         };
 
         // Create an instance of the image messenger and signup for callback.
-        _imageMessenger = new(_communicator);
+        _imageMessenger = new(Communicator);
         _imageMessenger.OnImageMessageReceived += delegate (string imageAsBase64String)
         {
             // Like mentioned above, OnPropertyChanged event is automatically marshaled

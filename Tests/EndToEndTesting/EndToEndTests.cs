@@ -15,7 +15,6 @@ using ChatMessaging;
 using ImageMessaging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
-using Networking;
 using ViewModel;
 
 namespace Tests.EndToEndTesting;
@@ -24,15 +23,12 @@ namespace Tests.EndToEndTesting;
 public class EndToEndTests
 {
     private MainPageViewModel _viewModel = null!;
-    private ICommunicator _communicator = null!;
 
     [TestInitialize]
     public void Setup()
     {
-        // Use the actual CommunicatorFactory to create a UdpCommunicator
-        _communicator = CommunicatorFactory.CreateCommunicator();
-        _viewModel = new MainPageViewModel(_communicator);
-        Logger.LogMessage($"Communicator started in port {_communicator.ListenPort}");
+        _viewModel = new MainPageViewModel(); // Use the actual communicator for the E2E tests, not a mock.
+        Logger.LogMessage($"Communicator started in port {_viewModel.Communicator.ListenPort}");
     }
 
     /// <summary>
@@ -40,16 +36,17 @@ public class EndToEndTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestSendAndReceiveChatMessage()
+    public async Task TestSendAndReceiveChatMessage()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
-        int port = _communicator.ListenPort;
+        int port = _viewModel.Communicator.ListenPort;
         string sentMessage = "Hello, World!";
         string receivedMessage = "Hello, back!";
 
         // Act
         _viewModel.SendChatMessage(ipAddress, port, sentMessage);
+        await Task.Delay(1000); // Adding a delay to ensure the message is received
         (_viewModel.GetType().GetField("_chatMessenger", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.GetValue(_viewModel) as ChatMessenger)
             ?.OnMessageReceived(receivedMessage);
@@ -63,17 +60,18 @@ public class EndToEndTests
     /// </summary>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public void TestSendAndReceiveImageMessage()
+    public async Task TestSendAndReceiveImageMessage()
     {
         // Arrange
         string ipAddress = "127.0.0.1";
-        int port = _communicator.ListenPort;
+        int port = _viewModel.Communicator.ListenPort;
         string imageFilePath = @"Resources\TestImageFile.jpg"; // Path to the test image in the resources
         byte[] imageBytes = File.ReadAllBytes(imageFilePath);
         string imageAsBase64String = Convert.ToBase64String(imageBytes);
 
         // Act
         _viewModel.SendImageMessage(ipAddress, port, imageFilePath);
+        await Task.Delay(1000); // Adding a delay to ensure the message is received
         (_viewModel.GetType().GetField("_imageMessenger", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
             ?.GetValue(_viewModel) as ImageMessenger)
             ?.OnMessageReceived(imageAsBase64String);
