@@ -22,7 +22,6 @@ namespace Networking;
 /// </summary>
 internal class UdpCommunicator : ICommunicator
 {
-    private IPEndPoint? _endPoint;
     private readonly UdpClient _listener;
     private readonly Thread _listenThread;      // Thread that listens for messages on the UDP port.
     private readonly Dictionary<string, IMessageListener> _subscribers; // List of subscribers.
@@ -107,12 +106,13 @@ internal class UdpCommunicator : ICommunicator
     private void ListenerThreadProc()
     {
         Trace.TraceInformation($"Listener Thread Id = {Environment.CurrentManagedThreadId}.");
+        IPEndPoint endPoint = null!;
         while (true)
         {
             try
             {
                 // Listen for message on the listening port, and receive it when it comes along.
-                byte[] bytes = _listener.Receive(ref _endPoint);
+                byte[] bytes = _listener.Receive(ref endPoint);
                 string payload = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
                 Trace.TraceInformation($"Received payload: {payload}");
 

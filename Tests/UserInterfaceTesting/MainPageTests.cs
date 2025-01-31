@@ -58,7 +58,7 @@ public class MainPageTests
     /// <returns>Task</returns>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
-    public async Task TestSendAndReceiveMessage()
+    public async Task TestSendAndReceiveMessageViaUI()
     {
         // Arrange
 

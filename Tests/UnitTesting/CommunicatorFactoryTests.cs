@@ -74,21 +74,43 @@ public class CommunicatorFactoryTests
 /// </summary>
 internal class CustomTraceListener : TraceListener
 {
-    public List<string> Messages { get; } = [];
+    private List<string> _messages = [];
 
+    /// <summary>
+    /// Gets the list of messages.
+    /// </summary>
+    public List<string> Messages
+    {
+        get
+        {
+            lock (this)
+            {
+                return _messages;
+            }
+        }
+    }
+
+    /// <inheritdoc/>
     public override void Write(string? message)
     {
         if (message != null)
         {
-            Messages.Add(message);
+            lock (this)
+            {
+                _messages.Add(message);
+            }
         }
     }
 
+    /// <inheritdoc/>
     public override void WriteLine(string? message)
     {
         if (message != null)
         {
-            Messages.Add(message);
+            lock (this)
+            {
+                _messages.Add(message);
+            }
         }
     }
 
