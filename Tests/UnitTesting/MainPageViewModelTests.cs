@@ -21,12 +21,18 @@ using ViewModel;
 
 namespace Tests.UnitTesting;
 
+/// <summary>
+/// Unit tests for the main page view model.
+/// </summary>
 [TestClass]
 public class MainPageViewModelTests
 {
     private Mock<ICommunicator> _mockCommunicator = null!;
     private MainPageViewModel _viewModel = null!;
 
+    /// <summary>
+    /// Sets up the tests.
+    /// </summary>
     [TestInitialize]
     public void Setup()
     {

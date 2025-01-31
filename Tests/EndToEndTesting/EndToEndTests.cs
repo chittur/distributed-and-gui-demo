@@ -19,11 +19,17 @@ using ViewModel;
 
 namespace Tests.EndToEndTesting;
 
+/// <summary>
+/// End-to-end tests for the application.
+/// </summary>
 [TestClass]
 public class EndToEndTests
 {
     private MainPageViewModel _viewModel = null!;
 
+    /// <summary>
+    /// Sets up the tests.
+    /// </summary>
     [TestInitialize]
     public void Setup()
     {

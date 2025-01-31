@@ -11,29 +11,43 @@
     <Grid>
         <StackPanel x:Name="RootStackPanel" Orientation="Vertical" VerticalAlignment="Center">
             <StackPanel x:Name="ReceiveStackPanel" Orientation="Horizontal" Background="#DDDDDD" >
-                <Label Name="ReceivePort" Content="Receive Port" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                <TextBox Name="ReceivePortTextBox" Text="{Binding ReceivePort, Mode=OneWay}" Padding="10" Margin="10,10,10,10" Width="80" Height="50" Background="LightGreen" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" />
-                <TextBox Name="ReceiveMessageTextBox" Text="{Binding ReceivedMessage, Mode=OneWay}" Padding="10" Margin="10,10,10,10" Width="320" Height="50" Background="LightGreen" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True"/>
+                <Label Name="ReceivePort" Content="Receive Port" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       AutomationProperties.AutomationId="ReceivePort" />
+                <TextBox Name="ReceivePortTextBox" Text="{Binding ReceivePort, Mode=OneWay}" Padding="10" Margin="10,10,10,10" Width="80" Height="50" Background="LightGreen" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" 
+                         AutomationProperties.AutomationId="ReceivePortTextBox" />
+                <TextBox Name="ReceiveMessageTextBox" Text="{Binding ReceivedMessage, Mode=OneWay}" Padding="10" Margin="10,10,10,10" Width="320" Height="50" Background="LightGreen" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True"
+                         AutomationProperties.AutomationId="ReceiveMessageTextBox" />
                 <Border BorderBrush="LightGreen" BorderThickness="5" >
-                    <Image x:Name="ReceiveImage" Source="{Binding ReceivedImage, Mode=OneWay}" Stretch="Fill" Width="250" Height="250" Margin="10,10,10,10" ToolTip="Received Image" />
+                    <Image x:Name="ReceiveImage" Source="{Binding ReceivedImage, Mode=OneWay}" Stretch="Fill" Width="250" Height="250" Margin="10,10,10,10" ToolTip="Received Image" 
+                           AutomationProperties.AutomationId="ReceiveImage" />
                 </Border>
             </StackPanel>
             <StackPanel x:Name="SendStackPanel" Orientation="Vertical" Background="LightYellow">
                 <StackPanel x:Name="SendIpAndPortStackPanel" Orientation="Horizontal">
-                    <Label Name="SendIpLabel" Content="Destination IP" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                    <TextBox Name="SendIpTextBox" Text="127.0.0.1" Padding="10" Margin="10,10,10,10" Width="100" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Label Name="SendPortLabel" Content="Destination Port" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                    <TextBox Name="SendPortTextBox" Padding="10" Margin="10,10,10,10" Width="100" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Label Name="SendIpLabel" Content="Destination IP" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                           AutomationProperties.AutomationId="SendIpLabel" />
+                    <TextBox Name="SendIpTextBox" Text="127.0.0.1" Padding="10" Margin="10,10,10,10" Width="100" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"
+                             AutomationProperties.AutomationId="SendIpTextBox" />
+                    <Label Name="SendPortLabel" Content="Destination Port" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                           AutomationProperties.AutomationId="SendPortLabel" />
+                    <TextBox Name="SendPortTextBox" Padding="10" Margin="10,10,10,10" Width="100" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"
+                             AutomationProperties.AutomationId="SendPortTextBox" />
                 </StackPanel>
                 <StackPanel x:Name="SendMessageStackPanel" Orientation="Horizontal">
-                    <Label Name="SendMessageLabel" Content="Message" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                    <TextBox Name="SendMessageTextBox" Padding="10" Margin="10,10,10,10" Width="510" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                    <Button Name="SendMessageButton" Content="Send Text" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SendMessageButtonClick" />
+                    <Label Name="SendMessageLabel" Content="Message" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                           AutomationProperties.AutomationId="SendMessageLabel" />
+                    <TextBox Name="SendMessageTextBox" Padding="10" Margin="10,10,10,10" Width="510" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"
+                             AutomationProperties.AutomationId="SendMessageTextBox" />
+                    <Button Name="SendMessageButton" Content="Send Text" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SendMessageButtonClick"
+                            AutomationProperties.AutomationId="SendMessageButton" />
                 </StackPanel>
                 <StackPanel x:Name="SendImageStackPanel" Orientation="Horizontal">
-                    <Label Name="SendImageLabel" Content="Image path" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center" />
-                    <TextBox Name="SendImageTextBox" Text="TestFiles\TestImageFile.jpg" Padding="10" Margin="10,10,10,10" Width="510" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                    <Button Name="SendImageButton" Content="Send Image" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SendImageButtonClick" />
+                    <Label Name="SendImageLabel" Content="Image path" Margin="10,10,10,10" Width="80" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" VerticalContentAlignment="Center"
+                           AutomationProperties.AutomationId="SendImageLabel" />
+                    <TextBox Name="SendImageTextBox" Text="TestFiles\TestImageFile.jpg" Padding="10" Margin="10,10,10,10" Width="510" Height="50" Background="Azure" VerticalAlignment="Top" HorizontalAlignment="Left"
+                             AutomationProperties.AutomationId="SendImageTextBox" />
+                    <Button Name="SendImageButton" Content="Send Image" Margin="10,10,10,10" Width="100" Height="50" VerticalAlignment="Top" HorizontalAlignment="Left" Click="SendImageButtonClick"
+                            AutomationProperties.AutomationId="SendImageButton" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

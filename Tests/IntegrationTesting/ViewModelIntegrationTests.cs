@@ -1,5 +1,5 @@
 ﻿/******************************************************************************
- * Filename    = IntegrationTests.cs
+ * Filename    = ViewModelIntegrationTests.cs
  *
  * Author      = Ramaswamy Krishnan-Chittur
  *
@@ -21,8 +21,11 @@ using ViewModel;
 
 namespace Tests.IntegrationTesting;
 
+/// <summary>
+/// Integration tests for the view model.
+/// </summary>
 [TestClass]
-public class IntegrationTests
+public class ViewModelIntegrationTests
 {
     private Mock<ICommunicator> _mockCommunicator = null!;
     private MainPageViewModel _viewModel = null!;

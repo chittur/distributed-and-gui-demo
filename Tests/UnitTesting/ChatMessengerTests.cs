@@ -17,12 +17,18 @@ using Networking;
 
 namespace Tests.UnitTesting;
 
+/// <summary>
+/// Unit tests for the chat messenger.
+/// </summary>
 [TestClass]
 public class ChatMessengerTests
 {
     private Mock<ICommunicator> _mockCommunicator = null!;
     private ChatMessenger _chatMessenger = null!;
 
+    /// <summary>
+    /// Sets up the tests.
+    /// </summary>
     [TestInitialize]
     public void Setup()
     {

@@ -21,6 +21,9 @@ using Networking;
 
 namespace Tests.UnitTesting;
 
+/// <summary>
+/// Unit tests for the UDP communicator.
+/// </summary>
 [TestClass]
 public class UdpCommunicatorTests
 {
@@ -80,7 +83,7 @@ public class UdpCommunicatorTests
         System.Reflection.FieldInfo? subscribersField = typeof(UdpCommunicator).GetField("_subscribers", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
         var subscribers = (Dictionary<string, IMessageListener>?)subscribersField?.GetValue(udpCommunicator);
         Assert.IsNotNull(subscribers);
-        Assert.AreEqual(subscribers!.Count, 1);
+        Assert.AreEqual(1, subscribers!.Count);
         Assert.IsTrue(subscribers!.ContainsKey(SubscriberId));
         Assert.AreEqual(mockListener2.Object, subscribers[SubscriberId]);
     }
@@ -133,6 +136,7 @@ public class UdpCommunicatorTests
     /// <summary>
     /// Tests that valid messages are received even when they are sent after corrupt messages.
     /// </summary>
+    /// <returns>Task</returns>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
     public async Task TestCorruptMessagesFollowedByValidMessages()
@@ -167,6 +171,7 @@ public class UdpCommunicatorTests
     /// <summary>
     /// Tests that a corrupt subscriber is handled.
     /// </summary>
+    /// <returns>Task</returns>
     [TestMethod]
     [Owner("Ramaswamy Krishnan-Chittur")]
     public async Task TestCorruptSubscriberIsHandled()

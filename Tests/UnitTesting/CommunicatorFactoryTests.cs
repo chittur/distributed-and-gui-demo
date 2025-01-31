@@ -17,6 +17,9 @@ using Networking;
 
 namespace Tests.UnitTesting;
 
+/// <summary>
+/// Unit tests for the communicator factory.
+/// </summary>
 [TestClass]
 public class CommunicatorFactoryTests
 {

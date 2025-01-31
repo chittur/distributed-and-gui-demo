@@ -19,6 +19,9 @@ using Networking;
 
 namespace Tests.UnitTesting;
 
+/// <summary>
+/// Unit tests for the image messenger.
+/// </summary>
 [TestClass]
 public class ImageMessengerTests
 {
@@ -26,6 +29,9 @@ public class ImageMessengerTests
     private ImageMessenger _imageMessenger = null!;
     const string ImageFilePath = @"Resources\TestImageFile.jpg";
 
+    /// <summary>
+    /// Sets up the tests.
+    /// </summary>
     [TestInitialize]
     public void Setup()
     {
