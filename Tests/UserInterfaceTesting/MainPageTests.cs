@@ -54,6 +54,51 @@ public class MainPageTests
     }
 
     /// <summary>
+    /// Tests that a message box is shown when attempting to send an image with incorrect details.
+    /// </summary>
+    /// <returns>Task</returns>
+    [TestMethod]
+    [Owner("Ramaswamy Krishnan-Chittur")]
+    public async Task TestAttemptToSendWithIncorrectImageDetails()
+    {
+        // Arrange
+
+        // Find the receive port of the second instance of the application.
+        Window window = _app1.GetMainWindow(_automation);
+
+        // Act
+
+        // From the second instance of the application, enter a message and the destination
+        // port of the first application, and click the Send Message button.
+        const string Message = "Hello World!";
+        TextBox imageTextBox = window.FindFirstDescendant(cf => cf.ByAutomationId("SendImageTextBox")).AsTextBox();
+        imageTextBox.Enter(Message);
+        TextBox sendPortTextBox = window.FindFirstDescendant(cf => cf.ByAutomationId("SendPortTextBox")).AsTextBox();
+        sendPortTextBox.Enter("0"); // Invalid destination port.
+        Button sendImageButton = window.FindFirstDescendant(cf => cf.ByAutomationId("SendImageButton")).AsButton();
+        sendImageButton.Invoke();
+        Logger.LogMessage($"Window SendPortTextBox:0, SendMessageTextBox: {Message}");
+
+        // Wait for a short while for the message box to show.
+        Logger.LogMessage("Waiting for a short while for the message box to show.");
+        await Task.Delay(1000);
+
+        // Assert
+
+        // Check if the message box was shown.
+        Window? messageBox = window.ModalWindows.FirstOrDefault();
+        Assert.IsNotNull(messageBox, "MessageBox did not appear.");
+
+        // Verify the MessageBox content
+        Label messageBoxText = messageBox.FindFirstDescendant(cf => cf.ByControlType(FlaUI.Core.Definitions.ControlType.Text)).AsLabel();
+        Assert.IsTrue(messageBoxText.Text.Contains("An error occurred"), "MessageBox text is incorrect.");
+
+        // Close the MessageBox
+        Button okButton = messageBox.FindFirstDescendant(cf => cf.ByAutomationId("2")).AsButton();
+        okButton.Invoke();
+    }
+
+    /// <summary>
     /// Tests that messages can be sent and received between two instances of the application.
     /// </summary>
     /// <returns>Task</returns>

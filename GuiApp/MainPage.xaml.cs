@@ -22,6 +22,8 @@ namespace GuiApp;
 /// </summary>
 public partial class MainPage : Page
 {
+    private readonly MainPageViewModel _viewModel;
+
     /// <summary>
     /// Creates an instance of the main page.
     /// </summary>
@@ -29,17 +31,9 @@ public partial class MainPage : Page
     {
         InitializeComponent();
 
-        try
-        {
-            // Create the ViewModel and set as data context.
-            MainPageViewModel viewModel = new();
-            DataContext = viewModel;
-        }
-        catch (Exception exception)
-        {
-            _ = MessageBox.Show(exception.Message);
-            Application.Current.Shutdown();
-        }
+        // Create the ViewModel and set as data context.
+        _viewModel = new();
+        DataContext = _viewModel;
     }
 
     /// <summary>
@@ -49,19 +43,13 @@ public partial class MainPage : Page
     /// <param name="e">Event args</param>
     private void SendMessageButtonClick(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            string destinationAddress = SendIpTextBox.Text;
-            int destinationPort = Convert.ToInt32(SendPortTextBox.Text);
-            string message = SendMessageTextBox.Text;
+        string destinationAddress = SendIpTextBox.Text;
+        int destinationPort = Convert.ToInt32(SendPortTextBox.Text);
+        string message = SendMessageTextBox.Text;
 
-            MainPageViewModel? viewModel = DataContext as MainPageViewModel;
-            viewModel?.SendChatMessage(destinationAddress, destinationPort, message);
-        }
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message);
-        }
+        _viewModel.SendChatMessage(destinationAddress, destinationPort, message);
+
+        // Note: No exception is thrown if the destination is not reachable.
     }
 
     /// <summary>
@@ -77,12 +65,13 @@ public partial class MainPage : Page
             int destinationPort = Convert.ToInt32(SendPortTextBox.Text);
             string imagePath = SendImageTextBox.Text;
 
-            MainPageViewModel? viewModel = DataContext as MainPageViewModel;
-            viewModel?.SendImageMessage(destinationAddress, destinationPort, imagePath);
+            _viewModel.SendImageMessage(destinationAddress, destinationPort, imagePath);
         }
         catch (Exception exception)
         {
-            MessageBox.Show(exception.Message);
+            // Note: No exception is thrown if the destination is not reachable.
+            //       But an exception is thrown if the image file is not found.
+            MessageBox.Show($"An error occurred: {exception.Message}");
         }
     }
 }
