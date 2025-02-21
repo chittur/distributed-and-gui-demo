@@ -10,6 +10,7 @@
  * Description = Unit tests for the communicator factory.
  *****************************************************************************/
 
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Logging;
@@ -34,7 +35,6 @@ public class CommunicatorFactoryTests
         ICommunicator communicator = CommunicatorFactory.CreateCommunicator();
 
         // Assert
-        Assert.IsNotNull(communicator);
         Assert.IsInstanceOfType(communicator, typeof(ICommunicator));
 
         // Access the public ListenPort property directly
@@ -57,15 +57,15 @@ public class CommunicatorFactoryTests
         ICommunicator communicator = CommunicatorFactory.CreateCommunicator();
 
         // Debugging information
-        var messagesCopy = listener.Messages.ToList(); // Create a copy of the collection
+        List<string> messagesCopy = listener.Messages; // Create a copy of the collection
         foreach (string message in messagesCopy)
         {
             Logger.LogMessage(message);
         }
 
         // Assert
-        Assert.IsTrue(listener.Messages.Count > 0, "No messages were logged.");
-        Assert.IsTrue(listener.Messages.Any(message => message.Contains("Starting Udp Communicator in port")), "Expected log message not found.");
+        Assert.IsTrue(messagesCopy.Count > 0, "No messages were logged.");
+        Assert.IsTrue(messagesCopy.Any(message => message.Contains("Starting Udp Communicator in port")), "Expected log message not found.");
     }
 }
 
@@ -74,31 +74,19 @@ public class CommunicatorFactoryTests
 /// </summary>
 internal class CustomTraceListener : TraceListener
 {
-    private List<string> _messages = [];
+    private ConcurrentBag<string> _messages = [];
 
     /// <summary>
     /// Gets the list of messages.
     /// </summary>
-    public List<string> Messages
-    {
-        get
-        {
-            lock (this)
-            {
-                return _messages;
-            }
-        }
-    }
+    public List<string> Messages => _messages.ToList();
 
     /// <inheritdoc/>
     public override void Write(string? message)
     {
         if (message != null)
         {
-            lock (this)
-            {
-                _messages.Add(message);
-            }
+            _messages.Add(message);
         }
     }
 
@@ -107,28 +95,26 @@ internal class CustomTraceListener : TraceListener
     {
         if (message != null)
         {
-            lock (this)
-            {
-                _messages.Add(message);
-            }
+            _messages.Add(message);
         }
     }
 
+    /// <inheritdoc/>
     public override void TraceEvent(TraceEventCache? eventCache, string source, TraceEventType eventType, int id, string? message)
     {
         if (message != null)
         {
-            Messages.Add(message);
+            _messages.Add(message);
         }
     }
 
+    /// <inheritdoc/>
     public override void TraceEvent(TraceEventCache? eventCache, string source, TraceEventType eventType, int id, string? format, params object?[]? args)
     {
         if (format != null)
         {
             string message = string.Format(format, args!);
-            Messages.Add(message);
+            _messages.Add(message);
         }
     }
 }
-
